@@ -28,8 +28,10 @@ const subItem = (subitem) => {
 };
 
 const createMenuJson = (response) => {
-  return response.map((item) => {
+  const menuChildren = []
+  const menu = response.map((item) => {
     const newName = convertName(item.name);
+    menuChildren.push("vtex.menu@2.x:menu#" + newName)
     const itemMenu = `
       "vtex.menu@2.x:menu#${newName}": {
         "props": {
@@ -38,9 +40,15 @@ const createMenuJson = (response) => {
           ]
         }
       }
-  `;
+    `;
     return itemMenu;
   });
+  console.log(
+    "%c LOG: __children ",
+    "background: orange; color: black;",
+    menuChildren
+  );
+  return menu
 };
 
 const createMenu = async () => {
@@ -60,7 +68,7 @@ const createMenu = async () => {
     }
   `;
   console.log(
-    "%c LOG: __menu",
+    "%c LOG: __menu ",
     "background: green; color: white;",
     JSON.parse(result)
   );
